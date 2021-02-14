@@ -13,14 +13,14 @@ public class ConnectionUtil {
     private final static SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
     private static ConnectionUtil instance;
     private static Connection connection;
-
-    private final String url = "jdbc:mysql://localhost/crud_db?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-    private final String user = "root";
+    //?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+    private final String url = "jdbc:postgresql://localhost:5432/crud_db?currentSchema=crud";
+    private final String user = "postgres";
     private final String password = "root";
 
     private ConnectionUtil() {
         try {
-            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+            DriverManager.registerDriver(new org.postgresql.Driver());
             this.connection = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             System.out.println("Connection to database was failed: " + e.getMessage());
