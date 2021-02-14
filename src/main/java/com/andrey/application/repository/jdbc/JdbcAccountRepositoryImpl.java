@@ -22,7 +22,8 @@ public class JdbcAccountRepositoryImpl implements AccountRepository {
         {
             statement.setString(1, newAccount.getName());
             statement.execute();
-            ResultSet resultSet =  statement.executeQuery(SQLQueries.LAST_SAVED_ACCOUNT.getValue());
+            PreparedStatement preparedStatement = ConnectionUtil.getStatement(SQLQueries.LAST_SAVED_ACCOUNT.getValue());
+            ResultSet resultSet =  preparedStatement.executeQuery();
             if (resultSet.next()) {
                 newAccount = DAOEntityBuilder.buildAccount(resultSet);
             }

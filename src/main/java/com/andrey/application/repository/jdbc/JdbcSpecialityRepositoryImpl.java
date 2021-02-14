@@ -23,11 +23,14 @@ public class JdbcSpecialityRepositoryImpl implements SpecialityRepository {
         {
             statement.setString(1, speciality.getName());
             statement.execute();
-            ResultSet resultSet = statement.executeQuery(SQLQueries.LAST_SAVED_SPECIALITY.getValue());
+            PreparedStatement preparedStatement = ConnectionUtil.getStatement(SQLQueries.LAST_SAVED_SPECIALITY.getValue());
+            ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 speciality = DAOEntityBuilder.buildSpeciality(resultSet);
             }
+            preparedStatement.close();
         } catch (SQLException e) {
+            e.printStackTrace();
             System.out.println("Ошибка при сохранении speciality в БД!");
         }
         return speciality;

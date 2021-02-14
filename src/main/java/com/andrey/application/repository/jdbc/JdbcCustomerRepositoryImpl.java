@@ -33,14 +33,17 @@ public class JdbcCustomerRepositoryImpl implements CustomerRepository {
             statement.setInt(3, newCustomer.getAge());
             statement.execute();
             Account accountAfterSave = accountRepository.save(newCustomer.getAccount());
-            ResultSet resultSet = statement.executeQuery(SQLQueries.LAST_SAVED_CUSTOMER.getValue());
+            PreparedStatement preparedStatement = ConnectionUtil.getStatement(SQLQueries.LAST_SAVED_CUSTOMER.getValue());
+            ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 newCustomer = DAOEntityBuilder.simpleBuildCustomer(resultSet);
             }
             //TODO accountRepository проглотил потенциальный exception, не могу понять как тут откатить если в accountRepository ошибка?
             newCustomer.setAccount(accountAfterSave);
             ConnectionUtil.commit();
+            preparedStatement.close();
         } catch (SQLException e) {
+            e.printStackTrace();
             try {
                 ConnectionUtil.rollback();
             } catch (SQLException rollBackException) {
@@ -135,6 +138,7 @@ public class JdbcCustomerRepositoryImpl implements CustomerRepository {
                 customers.add(customer);
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             System.out.println("Error findAll() method in class " + this.getClass().getName());
         }
         return customers;

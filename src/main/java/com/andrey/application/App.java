@@ -12,7 +12,7 @@ import com.andrey.application.view.MainBaseViewImpl;
  */
 public class App {
     public static void main( String[] args ) {
-        View view = new MainBaseViewImpl(new HibernateRepositoryFactory());
+        View view = new MainBaseViewImpl(new JdbcRepositoryFactory());
         view.startAction();
     }
 }

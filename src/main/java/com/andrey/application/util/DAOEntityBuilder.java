@@ -34,8 +34,8 @@ public class DAOEntityBuilder {
                 if (fieldId != null && fieldId.length() != 0) {
 
                     specialities = new HashSet<>();
-                    String[] id = fieldId.split(",");
-                    String[] names = fieldNames.split(",");
+                    String[] id = fieldId.replaceAll("[^0-9\\,]","").split(",");
+                    String[] names = fieldNames.replaceAll("[\\{\\}\"]","").split(",");
 
                     for (int i = 0; i < id.length; i++) {
                         Speciality speciality = new Speciality();
