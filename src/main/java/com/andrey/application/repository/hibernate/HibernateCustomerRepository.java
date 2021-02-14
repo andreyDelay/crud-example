@@ -70,7 +70,7 @@ public class HibernateCustomerRepository implements CustomerRepository {
     public List<Customer> findAll() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List customers = session.createQuery("From Customer").list();
+        List customers = session.createQuery("FROM Customer").list();
         session.getTransaction().commit();
         return customers;
     }

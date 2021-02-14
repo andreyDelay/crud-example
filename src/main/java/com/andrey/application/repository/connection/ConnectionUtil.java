@@ -14,7 +14,7 @@ public class ConnectionUtil {
     private static ConnectionUtil instance;
     private static Connection connection;
     //?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
-    private final String url = "jdbc:postgresql://localhost:5432/crud_db?currentSchema=crud";
+    private final String url = "jdbc:postgresql://localhost:5432/crud_db";
     private final String user = "postgres";
     private final String password = "root";
 

@@ -8,7 +8,8 @@ import java.util.Set;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "acc_seq", sequenceName = "my_seq_gen", allocationSize = 0)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "acc_seq")
     @Column(name = "customer_id")
     private Integer id;
 

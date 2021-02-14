@@ -1,5 +1,7 @@
 SET search_path TO crud;
 
+CREATE SEQUENCE my_seq_gen START 1;
+
 CREATE TABLE IF NOT EXISTS customers(
     customer_id serial PRIMARY KEY,
     name VARCHAR(24) NOT NULL,
