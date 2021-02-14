@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/andreyDelay/crud-example.svg?branch=master)](https://travis-ci.com/andreyDelay/crud-example)
 
 Необходимо реализовать консольное CRUD приложение, которое взаимодействует с БД и позволяет выполнять все CRUD операции над сущностями:
     
