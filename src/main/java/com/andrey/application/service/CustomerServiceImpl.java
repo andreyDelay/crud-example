@@ -2,16 +2,22 @@ package com.andrey.application.service;
 
 import com.andrey.application.model.Customer;
 import com.andrey.application.repository.CustomerRepository;
+import com.andrey.application.repository.connection.ConnectionUtil;
 
 import java.util.List;
 import java.util.Optional;
 
 public class CustomerServiceImpl implements CustomerService {
 
-    CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
 
     public CustomerServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
+    }
+
+    public CustomerServiceImpl() {
+        this.customerRepository = ConnectionUtil.defineRepository()
+                                    .getCustomerRepository();
     }
 
     @Override

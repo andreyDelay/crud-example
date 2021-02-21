@@ -2,16 +2,22 @@ package com.andrey.application.service;
 
 import com.andrey.application.model.Speciality;
 import com.andrey.application.repository.SpecialityRepository;
+import com.andrey.application.repository.connection.ConnectionUtil;
 
 import java.util.List;
 import java.util.Optional;
 
 public class SpecialityServiceImpl implements SpecialityService {
 
-    private SpecialityRepository specialityRepository;
+    private final SpecialityRepository specialityRepository;
 
     public SpecialityServiceImpl(SpecialityRepository specialityRepository) {
         this.specialityRepository = specialityRepository;
+    }
+
+    public SpecialityServiceImpl() {
+        this.specialityRepository = ConnectionUtil.defineRepository()
+                                        .getSpecialityRepository();
     }
 
     @Override

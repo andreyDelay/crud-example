@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,7 @@ public class HibernateCustomerRepository implements CustomerRepository {
         session.beginTransaction();
         session.persist(objectToSave);
         session.getTransaction().commit();
+        session.close();
         return objectToSave;
     }
 
@@ -61,8 +63,15 @@ public class HibernateCustomerRepository implements CustomerRepository {
     public Optional<Customer> find(Integer id) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        Customer customer = session.find(Customer.class, id);
+        Customer customer = session.createQuery(
+                "FROM Customer c LEFT JOIN FETCH c.specialities WHERE c.id =" + id
+                    ,Customer.class)
+                    .stream()
+                    .findFirst()
+                    .orElse(null);
+
         session.getTransaction().commit();
+        session.close();
         return Optional.of(customer);
     }
 
@@ -70,8 +79,9 @@ public class HibernateCustomerRepository implements CustomerRepository {
     public List<Customer> findAll() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List customers = session.createQuery("FROM Customer").list();
+        List customers = session.createQuery("FROM Customer c LEFT JOIN FETCH c.specialities").list();
         session.getTransaction().commit();
+        session.close();
         return customers;
     }
 }

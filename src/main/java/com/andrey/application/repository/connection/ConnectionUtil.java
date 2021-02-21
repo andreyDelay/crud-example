@@ -1,27 +1,34 @@
 package com.andrey.application.repository.connection;
 
+import com.andrey.application.repository.ProjectRepositoryFactory;
+import com.andrey.application.repository.hibernate.HibernateRepositoryFactory;
+import com.andrey.application.repository.jdbc.JdbcRepositoryFactory;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class ConnectionUtil {
 
     private final static SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
     private static ConnectionUtil instance;
     private static Connection connection;
-    //?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
-    private final String url = "jdbc:postgresql://localhost:5432/crud_db";
-    private final String user = "postgres";
-    private final String password = "root";
+    private static Properties context;
+    private static final String propertyFilePath = "application.properties";
 
     private ConnectionUtil() {
         try {
             DriverManager.registerDriver(new org.postgresql.Driver());
-            this.connection = DriverManager.getConnection(url, user, password);
+            context = PropertiesLoader.loadProperties(propertyFilePath);
+            this.connection = DriverManager.getConnection(
+                                                        context.getProperty("url"),
+                                                        context.getProperty("user"),
+                                                        context.getProperty("password"));
         } catch (SQLException e) {
             System.out.println("Connection to database was failed: " + e.getMessage());
         }
@@ -72,6 +79,32 @@ public class ConnectionUtil {
 
     public static void rollback() throws SQLException {
         connection.rollback();
+    }
+
+    private Properties getContext() {
+        return context;
+    }
+
+    public static ProjectRepositoryFactory defineRepository() {
+        ProjectRepositoryFactory repositoryFactory;
+        try {
+            context = ConnectionUtil.getInstance().getContext();
+            context = PropertiesLoader.loadProperties(propertyFilePath);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        String profile = context.getProperty("profile");
+        if (profile.equalsIgnoreCase("jdbc")) {
+            repositoryFactory = new JdbcRepositoryFactory();
+        } else if (profile.equalsIgnoreCase("hibernate")) {
+            repositoryFactory = new HibernateRepositoryFactory();
+        } else {
+            throw new RuntimeException("Unknown profile.");
+        }
+
+        return repositoryFactory;
     }
 
 }

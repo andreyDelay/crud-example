@@ -37,6 +37,7 @@ public class HibernateAccountRepository implements AccountRepository {
             }
         }
         session.getTransaction().commit();
+        session.close();
         return accountFromDB;
     }
 
@@ -69,6 +70,7 @@ public class HibernateAccountRepository implements AccountRepository {
         session.beginTransaction();
         List accounts = session.createQuery("FROM Account").list();
         session.getTransaction().commit();
+        session.close();
         return accounts;
     }
 }

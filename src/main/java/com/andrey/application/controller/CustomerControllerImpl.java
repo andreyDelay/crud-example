@@ -13,11 +13,7 @@ import java.util.List;
 public class CustomerControllerImpl {
 
     private final CustomerBuilder customerBuilder = new CustomerBuilder();
-    private final CustomerService customerService;
-
-    public CustomerControllerImpl(CustomerRepository customerRepository) {
-        customerService = new CustomerServiceImpl(customerRepository);
-    }
+    private final CustomerService customerService = new CustomerServiceImpl();
 
     public boolean isDataValid(String data, ValidatingOption validatingOption) throws IllegalArgumentException {
         try {

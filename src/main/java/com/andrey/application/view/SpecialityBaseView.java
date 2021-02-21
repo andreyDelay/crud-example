@@ -6,11 +6,7 @@ import com.andrey.application.util.ViewRequestUserForData;
 
 public class SpecialityBaseView extends BaseView implements View {
 
-    private final SpecialityControllerImpl specialityController;
-
-    public SpecialityBaseView(ProjectRepositoryFactory repositoryFactory) {
-        this.specialityController = new SpecialityControllerImpl(repositoryFactory.getSpecialityRepository());
-    }
+    private final SpecialityControllerImpl specialityController = new SpecialityControllerImpl();
 
     @Override
     public void startAction() {

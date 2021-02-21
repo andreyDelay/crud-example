@@ -3,7 +3,6 @@ package com.andrey.application.view;
 import com.andrey.application.controller.AccountControllerImpl;
 import com.andrey.application.model.Account;
 import com.andrey.application.model.AccountStatus;
-import com.andrey.application.repository.ProjectRepositoryFactory;
 import com.andrey.application.util.ViewRequestUserForData;
 
 import java.util.List;
@@ -11,11 +10,8 @@ import java.util.stream.Collectors;
 
 public class AccountBaseView extends BaseView implements View {
 
-    private AccountControllerImpl accountController;
+    private final AccountControllerImpl accountController = new AccountControllerImpl();
 
-    public AccountBaseView(ProjectRepositoryFactory repositoryFactory) {
-        accountController = new AccountControllerImpl(repositoryFactory.getAccountRepository());
-    }
 
     @Override
     public void startAction() {

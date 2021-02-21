@@ -2,16 +2,22 @@ package com.andrey.application.service;
 
 import com.andrey.application.model.Account;
 import com.andrey.application.repository.AccountRepository;
+import com.andrey.application.repository.connection.ConnectionUtil;
 
 import java.util.List;
 import java.util.Optional;
 
 public class AccountServiceImpl implements AccountService {
 
-    AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
     public AccountServiceImpl(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
+    }
+
+    public AccountServiceImpl() {
+        accountRepository = ConnectionUtil.defineRepository()
+                            .getAccountRepository();
     }
 
     @Override

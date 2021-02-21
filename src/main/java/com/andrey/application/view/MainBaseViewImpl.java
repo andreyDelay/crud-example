@@ -1,19 +1,11 @@
 package com.andrey.application.view;
 
 
-import com.andrey.application.repository.ProjectRepositoryFactory;
-
 public class MainBaseViewImpl extends BaseView implements View {
 
-    private final AccountBaseView accountView;
-    private final SpecialityBaseView specialityBaseView;
-    private final CustomerBaseView customerView;
-
-    public MainBaseViewImpl(ProjectRepositoryFactory repositoryFactory) {
-        accountView = new AccountBaseView(repositoryFactory);
-        specialityBaseView = new SpecialityBaseView(repositoryFactory);
-        customerView = new CustomerBaseView(repositoryFactory);
-    }
+    private final AccountBaseView accountView = new AccountBaseView();
+    private final SpecialityBaseView specialityBaseView = new SpecialityBaseView();
+    private final CustomerBaseView customerView = new CustomerBaseView();
 
     @Override
     public void startAction() {

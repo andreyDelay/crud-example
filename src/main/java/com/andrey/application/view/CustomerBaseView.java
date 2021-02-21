@@ -6,11 +6,7 @@ import com.andrey.application.util.ViewRequestUserForData;
 
 public class CustomerBaseView extends BaseView implements View {
 
-    private final CustomerControllerImpl customerController;
-
-    public CustomerBaseView(ProjectRepositoryFactory repositoryFactory) {
-        customerController = new CustomerControllerImpl(repositoryFactory.getCustomerRepository());
-    }
+    private final CustomerControllerImpl customerController = new CustomerControllerImpl();
 
     @Override
     public void startAction() {

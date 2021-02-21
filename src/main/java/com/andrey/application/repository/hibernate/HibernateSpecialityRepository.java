@@ -20,6 +20,7 @@ public class HibernateSpecialityRepository implements SpecialityRepository {
         session.beginTransaction();
         session.persist(objectToSave);
         session.getTransaction().commit();
+        session.close();
         return objectToSave;
     }
 
@@ -32,6 +33,7 @@ public class HibernateSpecialityRepository implements SpecialityRepository {
             specialityFromDB.setName(speciality.getName());
         }
         session.getTransaction().commit();
+        session.close();
         return specialityFromDB;
     }
 

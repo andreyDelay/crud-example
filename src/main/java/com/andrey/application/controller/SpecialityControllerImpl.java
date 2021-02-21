@@ -1,7 +1,6 @@
 package com.andrey.application.controller;
 
 import com.andrey.application.model.Speciality;
-import com.andrey.application.repository.SpecialityRepository;
 import com.andrey.application.service.SpecialityService;
 import com.andrey.application.service.SpecialityServiceImpl;
 import com.andrey.application.util.SpecialityBuilder;
@@ -12,12 +11,8 @@ import java.util.List;
 
 public class SpecialityControllerImpl {
 
-    private SpecialityService specialityService;
-    private SpecialityBuilder specialityBuilder = new SpecialityBuilder();
-
-    public SpecialityControllerImpl(SpecialityRepository specialityRepository) {
-        this.specialityService = new SpecialityServiceImpl(specialityRepository);
-    }
+    private final SpecialityService specialityService = new SpecialityServiceImpl();
+    private final SpecialityBuilder specialityBuilder = new SpecialityBuilder();
 
     public boolean isDataValid(String data, ValidatingOption validatingOption) {
         try {

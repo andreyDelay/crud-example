@@ -2,7 +2,6 @@ package com.andrey.application.controller;
 
 import com.andrey.application.model.Account;
 import com.andrey.application.model.AccountStatus;
-import com.andrey.application.repository.AccountRepository;
 import com.andrey.application.service.AccountService;
 import com.andrey.application.service.AccountServiceImpl;
 import com.andrey.application.util.AccountBuilder;
@@ -13,12 +12,8 @@ import java.util.List;
 
 public class AccountControllerImpl {
 
-    private AccountService accountService;
+    private final AccountService accountService = new AccountServiceImpl();
     private final AccountBuilder accountBuilder = new AccountBuilder();
-
-    public AccountControllerImpl(AccountRepository accountRepository) {
-        accountService = new AccountServiceImpl(accountRepository);
-    }
 
     public boolean isDataValid(String data, ValidatingOption validatingOption) throws IllegalArgumentException {
         try {
